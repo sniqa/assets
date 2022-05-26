@@ -1,0 +1,28 @@
+/* 导航项 */
+.nav-item-selected {
+	background-color: #e9eef3;
+	position: relative;
+}
+.nav-item-selected::before {
+	position: absolute;
+	display: block;
+	content: '';
+	background-color: #0067c0;
+	height: 1.2rem;
+	width: 3px;
+	left: 0;
+	border-radius: 15px;
+}
+.nav-item-hover:hover {
+	background-color: #e9eef3;
+}
+
+/* a标签的默认样式 */
+a {
+	text-decoration: none;
+}
+
+/* 宽度变化过度动画 */
+.width-translate {
+	transition: width 0.5s;
+}
