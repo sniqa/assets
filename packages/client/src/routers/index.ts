@@ -32,6 +32,12 @@ export enum RoutePath {
 
 	ECHARTS = 'echarts',
 	ROOT_ECHARTS = '/echarts',
+
+	MESSAGE = 'message',
+	ROOT_MESSAGE = '/message',
+
+	SETTINGS = 'settings',
+	ROOT_SETTINGS = '/settings',
 }
 
 export { SuspenseRoute }

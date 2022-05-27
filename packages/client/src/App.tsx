@@ -10,13 +10,11 @@ import Noticebar from './comps/notice/Noticebar'
 import SuspenseLoading from './routers/SuspenseLoading'
 import LeftSideNav from './comps/nav/LeftSidebarNav'
 
-import AnimateOutLet from './routers/AnimateOutlet'
-
 const Network = lazy(() => import('./views/Network'))
 const NotFound = lazy(() => import('./views/NotFound'))
 
-// network subpage
-const User = lazy(() => import('./views/networkSubpage/User'))
+const User = lazy(() => import('./views/User'))
+const Message = lazy(() => import('./views/Message'))
 
 const App = () => {
 	return (
@@ -34,26 +32,25 @@ const App = () => {
 				>
 					<Route index element={<Navigate to={RoutePath.HOME} replace />} />
 
+					{/* 主页 */}
 					<Route path={RoutePath.HOME} element={<Home />} />
 
 					{/* 网络 */}
-					<Route
-						path={RoutePath.NETWORK}
-						element={
-							<SuspenseLoading
-								element={<AnimateOutLet inClassName="slide-left" outClassName="slide-right" duration={500} />}
-							/>
-						}
-					>
+					<Route path={RoutePath.NETWORK} element={<SuspenseLoading element={<Outlet />} />}>
 						<Route index element={<SuspenseLoading element={<Network />} />} />
-
-						<Route path={RoutePath.USER} element={<SuspenseLoading element={<User />} />} />
 
 						<Route path={RoutePath.NET_TYPE} element={<SuspenseLoading element={<Network />} />} />
 
 						<Route path={RoutePath.IP} element={<SuspenseLoading element={<Network />} />} />
 					</Route>
 
+					{/* 用户 */}
+					<Route path={RoutePath.USER} element={<SuspenseLoading element={<User />} />} />
+
+					{/* 信息 */}
+					<Route path={RoutePath.MESSAGE} element={<SuspenseLoading element={<Message />} />} />
+
+					{/* Not Found */}
 					<Route path="*" element={<SuspenseLoading element={<NotFound />} />} />
 				</Route>
 			</Routes>

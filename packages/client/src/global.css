@@ -8,11 +8,21 @@
 	display: block;
 	content: '';
 	background-color: #0067c0;
-	height: 1.2rem;
 	width: 3px;
 	left: 0;
+	height: 1.2rem;
 	border-radius: 15px;
+	animation: nav-item-selected-before 0.5s;
 }
+@keyframes nav-item-selected-before {
+	from {
+		height: 0;
+	}
+	to {
+		height: 1.2rem;
+	}
+}
+
 .nav-item-hover:hover {
 	background-color: #e9eef3;
 }
