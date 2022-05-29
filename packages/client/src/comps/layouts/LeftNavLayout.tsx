@@ -7,7 +7,7 @@ const LeftNavLayout = ({ nav, content }: LeftNavLayoutProps) => {
 	return (
 		<div className="flex-grow flex">
 			{nav}
-			<div className="flex-grow ml-2.5rem">{content}</div>
+			<div className="flex-grow flex ml-2.5rem">{content}</div>
 		</div>
 	)
 }

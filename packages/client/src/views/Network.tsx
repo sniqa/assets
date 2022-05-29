@@ -13,7 +13,7 @@ const items = [
 
 const Network = () => {
 	return (
-		<AnimateWraper>
+		<AnimateWraper className="flex-grow">
 			{items.map((item, index) => (
 				<NavigataItem {...item} key={index} />
 			))}

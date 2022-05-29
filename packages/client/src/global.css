@@ -36,3 +36,39 @@ a {
 .width-translate {
 	transition: width 0.5s;
 }
+
+.cursor-r-resize {
+	position: relative;
+	background-color: #174573;
+	width: 48px;
+	height: 16px;
+}
+
+.cursor-r-resize::after {
+	position: absolute;
+	content: '';
+	display: block;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	width: 48px;
+	cursor: e-resize;
+	resize: horizontal;
+}
+
+.resizer {
+	position: absolute;
+	right: 0;
+	top: 0;
+	right: -1.5px;
+	height: 100%;
+	width: 3px;
+	background: rgba(0, 0, 0, 0.1);
+	cursor: col-resize;
+	user-select: none;
+	touch-action: none;
+}
+
+.border-bottom {
+	border-bottom: 1px solid rgb(34, 34, 34);
+}

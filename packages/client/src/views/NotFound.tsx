@@ -1,7 +1,7 @@
-import React from 'react'
+import AnimateWraper from '../comps/animate/AnimateWraper'
 
 const NotFound = () => {
-	return <div>NotFound</div>
+	return <AnimateWraper className="flex-grow">NotFound</AnimateWraper>
 }
 
 export default NotFound

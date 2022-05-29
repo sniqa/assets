@@ -1,7 +1,7 @@
 import AnimateWraper from '../comps/animate/AnimateWraper'
 
 const Message = () => {
-	return <AnimateWraper>Message</AnimateWraper>
+	return <AnimateWraper className="flex-grow">Message</AnimateWraper>
 }
 
 export default Message

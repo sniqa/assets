@@ -38,6 +38,9 @@ export enum RoutePath {
 
 	SETTINGS = 'settings',
 	ROOT_SETTINGS = '/settings',
+
+	DEVICES = 'devices',
+	ROOT_DEVICES = '/devices',
 }
 
 export { SuspenseRoute }
