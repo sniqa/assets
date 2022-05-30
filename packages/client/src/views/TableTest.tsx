@@ -30,13 +30,15 @@ const defaultColumns = [
 			/>
 		),
 		cell: ({ row }) => (
-			<CuzomCheckbox
-				{...{
-					checked: row.getIsSelected(),
-					indeterminate: row.getIsSomeSelected(),
-					onChange: row.getToggleSelectedHandler(),
-				}}
-			/>
+			<div className="px-1">
+				<CuzomCheckbox
+					{...{
+						checked: row.getIsSelected(),
+						indeterminate: row.getIsSomeSelected(),
+						onChange: row.getToggleSelectedHandler(),
+					}}
+				/>
+			</div>
 		),
 	}),
 	table.createDataColumn('firstName', {

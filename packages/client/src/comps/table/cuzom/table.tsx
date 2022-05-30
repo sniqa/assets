@@ -5,22 +5,24 @@ import {
 	getCoreRowModel,
 	ReactTableGenerics,
 	Table,
+	getPaginationRowModel,
+	getFilteredRowModel,
 } from '@tanstack/react-table'
 import { defaultScrollbar, defaultScrollbar2 } from '../../../config'
-import { Typography } from '@mui/material'
+import { TablePagination, Typography } from '@mui/material'
 import TableFooterPagination from './TableFooter'
 import AnimateWraper from '../../animate/AnimateWraper'
 import { useState } from 'react'
 
 import ShowField from './ShowField'
 
+const LABEL_ROWS_PER_PAGE = '每页行数：'
+
 interface CuzomTableProps {
 	table: Table<any>
 	columns: any[]
 	data: any[]
 }
-
-const SHOW_FIELD = `显示/隐藏字段`
 
 const CuzomTable = ({ columns, data, table }: CuzomTableProps) => {
 	const [columnVisibility, setColumnVisibility] = useState({})
@@ -36,10 +38,10 @@ const CuzomTable = ({ columns, data, table }: CuzomTableProps) => {
 			rowSelection,
 		},
 		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		onRowSelectionChange: setRowSelection,
 		onColumnVisibilityChange: setColumnVisibility,
-		debugTable: true,
-		debugHeaders: true,
-		debugColumns: true,
 	})
 
 	return (
@@ -50,63 +52,77 @@ const CuzomTable = ({ columns, data, table }: CuzomTableProps) => {
 			</section>
 
 			<section className={`flex-grow overflow-x-scroll ${defaultScrollbar} `}>
-				<table className={`min-h-full flex flex-col rounded-xl border`}>
-					{/* 表格头部 */}
-					<thead className={`flex overflow-y-scroll  items-center ${defaultScrollbar2}`}>
-						{instance.getHeaderGroups().map((headerGroup) => (
-							<tr key={headerGroup.id} className={` flex justify-center`}>
-								{headerGroup.headers.map((header) => (
-									<th
-										{...{
-											key: header.id,
-											colSpan: header.colSpan,
-											style: {
-												width: header.getSize(),
-											},
-										}}
-										className={`h-3rem leading-3rem relative`}
-									>
-										{header.isPlaceholder ? null : header.renderHeader()}
-										<div
+				<div className="h-full">
+					<table className={`min-h-full flex flex-col rounded-xl`}>
+						{/* 表格头部 */}
+						<thead className={`flex  border items-center ${defaultScrollbar2} `}>
+							{instance.getHeaderGroups().map((headerGroup) => (
+								<tr key={headerGroup.id} className={` flex justify-center`}>
+									{headerGroup.headers.map((header) => (
+										<th
 											{...{
-												onMouseDown: header.getResizeHandler(),
-												onTouchStart: header.getResizeHandler(),
-												className: `resizer`,
+												key: header.id,
+												colSpan: header.colSpan,
+												style: {
+													// width: header.getSize(),
+													width: header.id === 'select' ? 30 : header.getSize(),
+												},
 											}}
-										/>
-									</th>
-								))}
-							</tr>
-						))}
-					</thead>
+											className={`h-3rem leading-3rem relative`}
+										>
+											{header.isPlaceholder ? null : header.renderHeader()}
+											<div
+												{...{
+													onMouseDown: header.getResizeHandler(),
+													onTouchStart: header.getResizeHandler(),
+													className: `resizer`,
+												}}
+											/>
+										</th>
+									))}
+								</tr>
+							))}
+						</thead>
 
-					{/* 表格内容 */}
-					<tbody className={`flex-grow overflow-y-auto ${defaultScrollbar}`}>
-						{instance.getRowModel().rows.map((row) => (
-							<tr key={row.id} className={``}>
-								{row.getVisibleCells().map((cell) => (
-									<td
-										{...{
-											key: cell.id,
-											style: {
-												width: cell.column.getSize(),
-											},
-										}}
-										className={`border h-3rem leading-3rem`}
-									>
-										{cell.renderCell()}
-									</td>
-								))}
-							</tr>
-						))}
-					</tbody>
-				</table>
+						{/* 表格内容 */}
+						<tbody className={`flex-grow overflow-y-auto ${defaultScrollbar}`}>
+							{instance.getRowModel().rows.map((row) => (
+								<tr key={row.id} className={``}>
+									{row.getVisibleCells().map((cell) => (
+										<td
+											{...{
+												key: cell.id,
+												style: {
+													// width: cell.column.getSize(),
+													width: cell.column.id === 'select' ? 30 : cell.column.getSize(),
+												},
+											}}
+											className={`border h-3rem leading-3rem`}
+										>
+											{cell.renderCell()}
+										</td>
+									))}
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
 			</section>
 
 			{/* 底部 */}
 			<section className="flex justify-between items-center">
-				<Typography>{`${0} of ${100} Total Rows Selected`}</Typography>
-				<TableFooterPagination />
+				<Typography>{`${Object.keys(rowSelection).length} of ${data.length} Total Rows Selected`}</Typography>
+				<TablePagination
+					component="div"
+					count={data.length}
+					page={instance.getState().pagination.pageIndex}
+					labelRowsPerPage={LABEL_ROWS_PER_PAGE}
+					onPageChange={(e, index) => instance.setPageIndex(index)}
+					rowsPerPage={instance.getState().pagination.pageSize}
+					onRowsPerPageChange={(e) => {
+						instance.setPageSize(Number(e.target.value))
+					}}
+				/>
 			</section>
 		</AnimateWraper>
 	)

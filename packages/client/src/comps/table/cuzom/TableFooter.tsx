@@ -1,37 +1,28 @@
 import { TablePagination } from '@mui/material'
-import React from 'react'
+import React, { ChangeEvent, ChangeEventHandler, MouseEvent } from 'react'
 
 const LABEL_ROWS_PER_PAGE = '每页行数：'
 
 interface TableFooterProps {
 	count?: number
 	currentPage?: number
+	rowsPerPage: number
+	onRowsPerPageChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void
+	onPageChange: (e: MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 const TableFooterPagination = (props: TableFooterProps) => {
-	const { count = 100, currentPage = 0 } = props
-
-	const [page, setPage] = React.useState(currentPage)
-	const [rowsPerPage, setRowsPerPage] = React.useState(10)
-
-	const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
-		setPage(newPage)
-	}
-
-	const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		setRowsPerPage(parseInt(event.target.value, 10))
-		setPage(0)
-	}
+	const { count = 100, currentPage = 0, rowsPerPage, onRowsPerPageChange, onPageChange } = props
 
 	return (
 		<TablePagination
 			component="div"
 			count={count}
-			page={page}
+			page={currentPage}
 			labelRowsPerPage={LABEL_ROWS_PER_PAGE}
-			onPageChange={handleChangePage}
+			onPageChange={(e) => onPageChange}
 			rowsPerPage={rowsPerPage}
-			onRowsPerPageChange={handleChangeRowsPerPage}
+			onRowsPerPageChange={onRowsPerPageChange}
 		/>
 	)
 }
