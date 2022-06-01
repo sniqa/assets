@@ -17,6 +17,8 @@ const User = lazy(() => import('./views/User'))
 const Message = lazy(() => import('./views/Message'))
 
 const Table = lazy(() => import('./views/TableTest'))
+const Table2 = lazy(() => import('./views/TableTest2'))
+const Table3 = lazy(() => import('./views/TableTest3'))
 
 const App = () => {
 	return (
@@ -54,6 +56,8 @@ const App = () => {
 
 					{/* 表格 */}
 					<Route path={`table`} element={<SuspenseLoading element={<Table />} />} />
+					<Route path={`table2`} element={<SuspenseLoading element={<Table2 />} />} />
+					<Route path={`table3`} element={<SuspenseLoading element={<Table3 />} />} />
 
 					{/* Not Found */}
 					<Route path="*" element={<SuspenseLoading element={<NotFound />} />} />

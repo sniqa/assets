@@ -59,16 +59,16 @@ a {
 .resizer {
 	position: absolute;
 	right: 0;
-	top: 0;
-	right: -1.5px;
-	height: 100%;
+	top: 8px;
+	right: 0px;
+	height: 2rem;
 	width: 3px;
-	background: rgba(0, 0, 0, 0.1);
+	background: rgba(234, 235, 240, 0.9);
 	cursor: col-resize;
 	user-select: none;
 	touch-action: none;
 }
 
 .border-bottom {
-	border-bottom: 1px solid rgb(34, 34, 34);
+	border-bottom: 1px solid rgb(214, 207, 207);
 }

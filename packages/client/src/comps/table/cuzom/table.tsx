@@ -14,7 +14,7 @@ import TableFooterPagination from './TableFooter'
 import AnimateWraper from '../../animate/AnimateWraper'
 import { useState } from 'react'
 
-import ShowField from './ShowField'
+import ShowField from '../ShowField'
 
 const LABEL_ROWS_PER_PAGE = '每页行数：'
 
@@ -45,17 +45,17 @@ const CuzomTable = ({ columns, data, table }: CuzomTableProps) => {
 	})
 
 	return (
-		<AnimateWraper className="bg-light-50 rounded-xl p-2 flex flex-col">
+		<AnimateWraper className="bg-light-50 rounded-xl flex flex-col">
 			{/* toolbar */}
 			<section>
 				<ShowField tableInstance={instance}></ShowField>
 			</section>
 
-			<section className={`flex-grow overflow-x-scroll ${defaultScrollbar} `}>
+			<section className={`flex-grow overflow-x-scroll ${defaultScrollbar}`}>
 				<div className="h-full">
-					<table className={`min-h-full flex flex-col rounded-xl`}>
+					<table className={`min-h-full flex flex-col rounded-xl  px-2`}>
 						{/* 表格头部 */}
-						<thead className={`flex  border items-center ${defaultScrollbar2} `}>
+						<thead className={`flex  items-center ${defaultScrollbar2} `}>
 							{instance.getHeaderGroups().map((headerGroup) => (
 								<tr key={headerGroup.id} className={` flex justify-center`}>
 									{headerGroup.headers.map((header) => (
@@ -64,20 +64,21 @@ const CuzomTable = ({ columns, data, table }: CuzomTableProps) => {
 												key: header.id,
 												colSpan: header.colSpan,
 												style: {
-													// width: header.getSize(),
-													width: header.id === 'select' ? 30 : header.getSize(),
+													width: header.getSize(),
 												},
 											}}
-											className={`h-3rem leading-3rem relative`}
+											className={`h-3rem leading-3rem relative border-bottom`}
 										>
 											{header.isPlaceholder ? null : header.renderHeader()}
-											<div
-												{...{
-													onMouseDown: header.getResizeHandler(),
-													onTouchStart: header.getResizeHandler(),
-													className: `resizer`,
-												}}
-											/>
+											{header.id !== 'select' && (
+												<div
+													{...{
+														onMouseDown: header.getResizeHandler(),
+														onTouchStart: header.getResizeHandler(),
+														className: `resizer`,
+													}}
+												/>
+											)}
 										</th>
 									))}
 								</tr>
@@ -93,11 +94,10 @@ const CuzomTable = ({ columns, data, table }: CuzomTableProps) => {
 											{...{
 												key: cell.id,
 												style: {
-													// width: cell.column.getSize(),
-													width: cell.column.id === 'select' ? 30 : cell.column.getSize(),
+													width: cell.column.getSize(),
 												},
 											}}
-											className={`border h-3rem leading-3rem`}
+											className={`border-bottom h-3rem leading-3rem`}
 										>
 											{cell.renderCell()}
 										</td>
@@ -110,7 +110,7 @@ const CuzomTable = ({ columns, data, table }: CuzomTableProps) => {
 			</section>
 
 			{/* 底部 */}
-			<section className="flex justify-between items-center">
+			<section className="flex justify-between items-center px-2">
 				<Typography>{`${Object.keys(rowSelection).length} of ${data.length} Total Rows Selected`}</Typography>
 				<TablePagination
 					component="div"

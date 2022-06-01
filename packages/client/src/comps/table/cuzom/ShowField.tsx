@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { Accordion, AccordionDetails, AccordionSummary, Button, Switch, Typography } from '@mui/material'
 import { TableInstance } from '@tanstack/react-table'
-import CuzomSwitch from '../../CuzomSwitch'
+import CuzomSwitch from '../CuzomSwitch'
 
 const SHOW_FIELD = `显示/隐藏字段`
 

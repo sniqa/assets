@@ -1,7 +1,7 @@
 import { Button, ButtonGroup, Checkbox } from '@mui/material'
 import { createTable } from '@tanstack/react-table'
 import { Fragment, HTMLAttributes, useEffect, useRef } from 'react'
-import CuzomTable from '../comps/table/cuzom/table'
+import CuzomTable from '../comps/table/CuzomTable'
 import { makeData } from '../comps/table/makeData'
 
 import { createRowSelection } from '../comps/table/cuzom/createTableColumns'
