@@ -15,6 +15,7 @@
 		"@mui/material": "^5.6.1",
 		"@mui/x-data-grid": "^5.9.0",
 		"@reduxjs/toolkit": "^1.8.1",
+		"@tanstack/match-sorter-utils": "^8.0.0-alpha.82",
 		"@tanstack/react-table": "8.0.0-beta.2",
 		"echarts": "^5.3.2",
 		"framer-motion": "^6.3.4",
@@ -28,6 +29,7 @@
 		"react-router-dom": "6"
 	},
 	"devDependencies": {
+		"@assets/error": "1.0.0",
 		"@assets/types": "1.0.0",
 		"@faker-js/faker": "^7.1.0",
 		"@types/react": "^18.0.0",

@@ -45,7 +45,7 @@ const ContentLayout = () => {
 				</Breadcrumbs>
 			</section>
 
-			<section className="flex-grow flex overflow-hidden reletive">
+			<section className="flex-grow flex  overflow-hidden reletive">
 				<Outlet />
 			</section>
 		</main>

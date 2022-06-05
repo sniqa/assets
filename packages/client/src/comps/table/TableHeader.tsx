@@ -8,9 +8,9 @@ interface TableHeaderProps {
 
 const TableHeader = ({ instance }: TableHeaderProps) => {
 	return (
-		<thead className={`flex items-center ${defaultScrollbar2} `}>
+		<thead className={`flex ${defaultScrollbar2}`}>
 			{instance.getHeaderGroups().map((headerGroup) => (
-				<tr key={headerGroup.id} className={` flex justify-center`}>
+				<tr key={headerGroup.id}>
 					{headerGroup.headers.map((header) => (
 						<th
 							{...{

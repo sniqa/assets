@@ -12,11 +12,9 @@ const TableBody = ({ instance }: TableBodyProps) => {
 				<tr key={row.id} className={``}>
 					{row.getVisibleCells().map((cell) => (
 						<td
-							{...{
-								key: cell.id,
-								style: {
-									width: cell.column.getSize(),
-								},
+							key={cell.id}
+							style={{
+								width: cell.column.getSize(),
 							}}
 							className={`border-bottom h-3rem leading-3rem`}
 						>

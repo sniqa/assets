@@ -19,10 +19,19 @@ const TableFooter = (porps: TableFooterProps) => {
 
 	return (
 		<tfoot>
-			<tr className={`flex justify-between`}>
-				<td>
-					<Typography>{`${rowSelection} of ${rowCount} Total Rows Selected`}</Typography>
-				</td>
+			<tr className={`flex items-center`}>
+				{rowSelection > 0 && (
+					<td>
+						<Typography>
+							<span className="text-blue-500">{` ${rowSelection} `}</span>
+							{`of`}
+							<span className="text-blue-500">{` ${rowCount} `}</span>
+							{`Total Rows Selected`}
+						</Typography>
+					</td>
+				)}
+
+				<td className="flex-grow" />
 
 				<td>
 					<TablePagination

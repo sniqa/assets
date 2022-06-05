@@ -1,0 +1,12 @@
+{
+	"name": "@assets/error",
+	"version": "1.0.0",
+	"private": true,
+	"main": "./src/index.ts",
+	"type": "module",
+	"license": "MIT",
+	"dependencies": {},
+	"devDependencies": {
+		"typescript": "^4.6.3"
+	}
+}

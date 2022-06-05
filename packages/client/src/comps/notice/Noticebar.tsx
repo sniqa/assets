@@ -1,5 +1,6 @@
 import { Alert, AlertColor, Snackbar, SnackbarCloseReason } from '@mui/material'
 import { useState } from 'react'
+import { emitter } from '../../apis/mitt'
 
 export interface NoticebarStatus {
 	status: AlertColor
@@ -8,6 +9,10 @@ export interface NoticebarStatus {
 }
 
 const Noticebar = () => {
+	emitter.on('notice', (state) => {
+		setSnackbarStatus(state)
+	})
+
 	const [snackbarStatus, setSnackbarStatus] = useState<NoticebarStatus>({
 		status: 'success',
 		message: '',
@@ -16,7 +21,7 @@ const Noticebar = () => {
 	return (
 		<Snackbar
 			open={snackbarStatus.message != ''}
-			autoHideDuration={2000}
+			autoHideDuration={3000}
 			onClose={() => setSnackbarStatus({ ...snackbarStatus, message: '' })}
 			message={snackbarStatus.message}
 			anchorOrigin={{

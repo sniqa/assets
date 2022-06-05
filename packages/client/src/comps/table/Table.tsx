@@ -13,7 +13,7 @@ interface MyTableProps {
 
 const MyTable = ({ data, instance, rowSelection }: MyTableProps) => {
 	return (
-		<table className={`min-h-full flex flex-col rounded-xl  px-2 overflow-x-auto ${defaultScrollbar}`}>
+		<table className={`min-h-full flex flex-col rounded-xl px-4`}>
 			{/* 表格头部 */}
 			{<TableHeader instance={instance} />}
 

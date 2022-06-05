@@ -1,12 +1,10 @@
-import { Render, Table } from '@tanstack/react-table'
-
 import CuzomCheckbox from './CuzomCheckbox'
 
-export const createRowSelection = (table: Table<any>) => {
-	return table.createDisplayColumn({
+export const createRowSelection = () => {
+	return {
 		id: 'select',
 		size: 50,
-		header: ({ instance }) => (
+		header: ({ instance }: any) => (
 			<div className="text-center">
 				<CuzomCheckbox
 					{...{
@@ -17,7 +15,7 @@ export const createRowSelection = (table: Table<any>) => {
 				/>
 			</div>
 		),
-		cell: ({ row }) => (
+		cell: ({ row }: any) => (
 			<div className="text-center">
 				<CuzomCheckbox
 					{...{
@@ -28,5 +26,5 @@ export const createRowSelection = (table: Table<any>) => {
 				/>
 			</div>
 		),
-	})
+	}
 }
