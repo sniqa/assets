@@ -28,9 +28,11 @@ const NavigataItem = (props: NavigataItemProps) => {
 		>
 			<section className="flex-grow flex items-center">
 				{leftIcon}
-				<div className="flex flex-col ml-2">
+				<div className="flex flex-col ml-4 justify-between">
 					<Typography className="">{title}</Typography>
-					<Typography className="">{detail}</Typography>
+					<Typography className="text-gray-600" sx={{ fontSize: '14px' }}>
+						{detail}
+					</Typography>
 				</div>
 			</section>
 

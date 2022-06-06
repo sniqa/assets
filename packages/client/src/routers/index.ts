@@ -24,8 +24,23 @@ export enum RoutePath {
 	NET_TYPE = 'nettype',
 	ROOT_NET_TYPE = '/nettype',
 
-	IP = 'ip',
-	ROOT_IP = '/ip',
+	IP_RANGE = 'iprange',
+	ROOT_IP_RANGE = '/iprange',
+
+	IP_TYPE = 'iptype',
+	ROOT_IP_TYPE = 'iptype',
+
+	IP_SCANNER = 'ipscanner',
+	ROOT_IP_SCANNER = '/ipscanner',
+
+	IP_MONITOR = 'ipmonitor',
+	ROOT_IP_MONITOR = '/ipmonitor',
+
+	IP_OVERVIEW = 'ipoverview',
+	ROOT_IP_OVERVIEW = '/ipoverview',
+
+	IP_STRUCT = 'ipstruct',
+	ROOT_IP_STRUCT = '/ipstruct',
 
 	PLAN = 'plan',
 	ROOT_PLAN = '/plan',

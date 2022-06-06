@@ -15,6 +15,14 @@ const NotFound = lazy(() => import('./views/NotFound'))
 
 const User = lazy(() => import('./views/User'))
 const Message = lazy(() => import('./views/Message'))
+const Devices = lazy(() => import('./views/Devices'))
+
+const IpType = lazy(() => import('./views/networkSubpage/IpType'))
+const IpMonitor = lazy(() => import('./views/networkSubpage/IpMonitor'))
+const IpOverview = lazy(() => import('./views/networkSubpage/IpOverview'))
+const IpRange = lazy(() => import('./views/networkSubpage/IpRange'))
+const IpScanner = lazy(() => import('./views/networkSubpage/IpScanner'))
+const IpStruct = lazy(() => import('./views/networkSubpage/IpStruct'))
 
 const App = () => {
 	return (
@@ -39,9 +47,17 @@ const App = () => {
 					<Route path={RoutePath.NETWORK} element={<SuspenseLoading element={<Outlet />} />}>
 						<Route index element={<SuspenseLoading element={<Network />} />} />
 
-						<Route path={RoutePath.NET_TYPE} element={<SuspenseLoading element={<Network />} />} />
+						<Route path={RoutePath.IP_TYPE} element={<SuspenseLoading element={<IpType />} />} />
 
-						<Route path={RoutePath.IP} element={<SuspenseLoading element={<Network />} />} />
+						<Route path={RoutePath.IP_OVERVIEW} element={<SuspenseLoading element={<IpOverview />} />} />
+
+						<Route path={RoutePath.IP_RANGE} element={<SuspenseLoading element={<IpRange />} />} />
+
+						<Route path={RoutePath.IP_MONITOR} element={<SuspenseLoading element={<IpMonitor />} />} />
+
+						<Route path={RoutePath.IP_SCANNER} element={<SuspenseLoading element={<IpScanner />} />} />
+
+						<Route path={RoutePath.IP_STRUCT} element={<SuspenseLoading element={<IpStruct />} />} />
 					</Route>
 
 					{/* 用户 */}
@@ -50,6 +66,8 @@ const App = () => {
 					{/* 信息 */}
 					<Route path={RoutePath.MESSAGE} element={<SuspenseLoading element={<Message />} />} />
 
+					{/* 设备 */}
+					<Route path={RoutePath.DEVICES} element={<SuspenseLoading element={<Devices />} />} />
 					{/* 表格 */}
 					{/* <Route path={`table`} element={<SuspenseLoading element={<Table />} />} />
 					<Route path={`table2`} element={<SuspenseLoading element={<Table2 />} />} />

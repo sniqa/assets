@@ -1,21 +1,14 @@
 import { Button } from '@mui/material'
 import { Row } from '@tanstack/react-table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { UserInfoWitId } from '@assets/types'
 import Table, { createCuzomTable, createRowSelection } from '../comps/table'
 import { _fetch } from '../apis/fetch'
 import { useAppDispatch, useAppSelector } from '../store'
 import { notice } from '../apis/mitt'
 import { addUser, deleteManyUser, setUsers } from '../store/user'
 
-interface UserInfo {
-	username: string
-	nickname?: string
-	department?: string
-	number?: number
-	test?: string
-}
-
-const table = createCuzomTable<UserInfo>()
+const table = createCuzomTable<UserInfoWitId>()
 
 const User = () => {
 	const users = useAppSelector((state) => state.users)
@@ -54,7 +47,7 @@ const User = () => {
 		[]
 	)
 
-	const addUserCallback = async (data: Partial<UserInfo>) => {
+	const addUserCallback = async (data: Partial<UserInfoWitId>) => {
 		const { createUser } = await _fetch({ createUser: data })
 
 		if (createUser.success) {
