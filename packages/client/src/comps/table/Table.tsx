@@ -1,29 +1,118 @@
-import { TableInstance, RowSelectionState } from '@tanstack/react-table'
+import {
+	useTableInstance,
+	getCoreRowModel,
+	Table,
+	createTable,
+	sortingFns,
+	getPaginationRowModel,
+	getFilteredRowModel,
+	Row,
+	AccessorFn,
+	TableInstance,
+	ColumnDef,
+	ColumnFiltersState,
+} from '@tanstack/react-table'
 
-import TableHeader from './TableHeader'
-import TableBody from './TableBody'
-import TableFooter from './TableFooter'
+import { RankingInfo, rankItem, compareItems, rankings } from '@tanstack/match-sorter-utils'
+
+import AnimateWraper from '../animate/AnimateWraper'
+import { useEffect, useState } from 'react'
+import MyTable from './TableContainer'
+
 import { defaultScrollbar } from '../../config'
+import TableToolbar from './TableToolbar'
 
-interface MyTableProps {
-	instance: TableInstance<any>
+interface CuzomTableProps {
+	columns: ColumnDef<any>[]
 	data: any[]
-	rowSelection: RowSelectionState
+	table: Table<any>
+	deleteSelection?: (rows: Row<any>[]) => void
+	addData?: <T>(data: T) => void
 }
 
-const MyTable = ({ data, instance, rowSelection }: MyTableProps) => {
+export const createCuzomTable = <T extends Record<string, any> = {}>() =>
+	createTable()
+		.setRowType<T>()
+		.setFilterMetaType<RankingInfo>()
+		.setOptions({
+			filterFns: {
+				fuzzy: (row, columnId, value, addMeta) => {
+					// Rank the item
+					const itemRank = rankItem(row.getValue(columnId), value, {
+						threshold: rankings.MATCHES,
+					})
+
+					// Store the ranking info
+					addMeta(itemRank)
+
+					// Return if the item should be filtered in/out
+					return itemRank.passed
+				},
+			},
+			sortingFns: {
+				fuzzy: (rowA, rowB, columnId) => {
+					let dir = 0
+
+					// Only sort by rank if the column has ranking information
+					if (rowA.columnFiltersMeta[columnId]) {
+						dir = compareItems(rowA.columnFiltersMeta[columnId]!, rowB.columnFiltersMeta[columnId]!)
+					}
+
+					// Provide a fallback for when the item ranks are equal
+					return dir === 0 ? sortingFns.alphanumeric(rowA, rowB, columnId) : dir
+				},
+			},
+		})
+
+const CuzomTable = (props: CuzomTableProps) => {
+	const { columns, data, table, deleteSelection = () => {}, addData = () => {} } = props
+
+	const [columnVisibility, setColumnVisibility] = useState({})
+
+	const [globalFilter, setGlobalFilter] = useState('')
+
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([])
+
+	const [rowSelection, setRowSelection] = useState({})
+
+	const instance = useTableInstance(table, {
+		data,
+		columns,
+		columnResizeMode: 'onChange',
+		state: {
+			columnVisibility,
+			rowSelection,
+			columnFilters,
+			globalFilter,
+		},
+		globalFilterFn: 'fuzzy',
+		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		onRowSelectionChange: setRowSelection,
+		onColumnFiltersChange: setColumnFilters,
+		onGlobalFilterChange: setGlobalFilter,
+		onColumnVisibilityChange: setColumnVisibility,
+	})
+
 	return (
-		<table className={`min-h-full flex flex-col rounded-xl px-4`}>
-			{/* 表格头部 */}
-			{<TableHeader instance={instance} />}
+		<AnimateWraper className="bg-light-50 flex flex-col  rounded-2xl">
+			{/* toolbar */}
+			<section>
+				<TableToolbar
+					instance={instance}
+					deleteSelection={deleteSelection}
+					globalFilter={setGlobalFilter}
+					columnFilters={setColumnFilters}
+					addData={addData}
+				/>
+			</section>
 
-			{/* 表格内容 */}
-			{<TableBody instance={instance} />}
-
-			{/* 表格底部 */}
-			{<TableFooter instance={instance} rowCount={data.length} rowSelection={Object.keys(rowSelection).length} />}
-		</table>
+			<section className={`flex-grow overflow-auto ${defaultScrollbar}`}>
+				<MyTable instance={instance} rowSelection={rowSelection} data={data} />
+			</section>
+		</AnimateWraper>
 	)
 }
 
-export default MyTable
+export default CuzomTable

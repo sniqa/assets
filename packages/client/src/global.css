@@ -1,5 +1,4 @@
-/* 导航项 */
-.nav-item-selected {
+导航项 .nav-item-selected {
 	background-color: #e9eef3;
 	position: relative;
 }
@@ -76,4 +75,44 @@ a {
 th {
 	/* display: ; */
 	text-align: start;
+}
+
+input[type='checkbox'] {
+	top: 3px;
+	width: 18px;
+	height: 18px;
+	position: relative;
+	cursor: pointer;
+}
+
+input[type='checkbox']::before,
+input[type='checkbox']::after {
+	position: absolute;
+	top: 0;
+	width: 18px;
+	height: 18px;
+	visibility: visible;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 2px;
+	box-sizing: border-box;
+}
+
+input[type='checkbox']:checked::before {
+	content: '✓';
+	color: #fff;
+	font-size: 18px;
+	top: 0;
+	font-weight: 900;
+	background-color: #1976d2;
+}
+
+input[type='checkbox']:indeterminate::after {
+	content: '一';
+	color: #fff;
+	font-size: 10px;
+	font-weight: 900;
+	top: 0;
+	background-color: #1976d2;
 }

@@ -1,5 +1,5 @@
-import CuzomTable, { createCuzomTable } from './CuzomTable'
+import Table, { createCuzomTable } from './Table'
 
 export { createCuzomTable }
 export { createRowSelection } from './createTableColumns'
-export default CuzomTable
+export default Table

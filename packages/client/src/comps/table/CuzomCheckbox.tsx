@@ -1,3 +1,4 @@
+import { Checkbox, Input } from '@mui/material'
 import { HTMLAttributes, useEffect, useRef } from 'react'
 
 const CuzomCheckbox = ({
@@ -13,7 +14,7 @@ const CuzomCheckbox = ({
 		}
 	}, [ref, indeterminate])
 
-	return <input type="checkbox" ref={ref} className={className + ' cursor-pointer'} {...rest} />
+	return <input type="checkbox" ref={ref} className={className + 'cuzom-checkbox cursor-pointer'} {...rest} />
 }
 
 export default CuzomCheckbox
