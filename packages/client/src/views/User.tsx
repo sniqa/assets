@@ -92,7 +92,7 @@ const User = () => {
 			findUser.success && dispatch(setUsers(findUser.data))
 		}
 
-		fetchUser()
+		users.length === 0 && fetchUser()
 	}, [])
 
 	return (
@@ -101,7 +101,7 @@ const User = () => {
 				table={table}
 				columns={columns}
 				data={users}
-				addDate={addUserCallback}
+				addData={addUserCallback}
 				deleteSelection={deleteSelectUser}
 			/>
 		</div>

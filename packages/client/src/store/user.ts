@@ -8,9 +8,6 @@ export const UserSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		getUsers: (state) => {
-			return state
-		},
 		setUsers: (state, action: PayloadAction<Array<UserInfo>>) => {
 			return (state = action.payload)
 		},
@@ -29,6 +26,6 @@ export const UserSlice = createSlice({
 	},
 })
 
-export const { getUsers, setUsers, addUser, findUsers, modifyUser, deleteManyUser } = UserSlice.actions
+export const { setUsers, addUser, findUsers, modifyUser, deleteManyUser } = UserSlice.actions
 
 export default UserSlice.reducer

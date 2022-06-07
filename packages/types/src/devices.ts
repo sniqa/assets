@@ -1,12 +1,13 @@
 import { WithId } from './common'
 
 enum DeviceType {
-	terminal = '终端',
-	subterminal = '亚终端',
+	desktop = '台式机',
+	laptop = '笔记本',
+	printer = '打印机',
 	server = '服务器',
 }
 
-interface DevicesInfo {
+export interface DeviceInfo {
 	deviceName?: string
 	user?: string
 	deviceType?: DeviceType
@@ -15,3 +16,7 @@ interface DevicesInfo {
 	useIp?: string
 	desc?: string
 }
+
+export type DeviceInfoWithId = DeviceInfo & WithId
+
+export type DevicesInfoWithid = Array<DeviceInfoWithId>

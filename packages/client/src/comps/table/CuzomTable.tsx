@@ -27,7 +27,7 @@ interface CuzomTableProps {
 	data: any[]
 	table: Table<any>
 	deleteSelection?: (rows: Row<any>[]) => void
-	addDate?: <T>(data: T) => void
+	addData?: <T>(data: T) => void
 }
 
 export const createCuzomTable = <T extends Record<string, any> = {}>() =>
@@ -65,7 +65,7 @@ export const createCuzomTable = <T extends Record<string, any> = {}>() =>
 		})
 
 const CuzomTable = (props: CuzomTableProps) => {
-	const { columns, data, table, deleteSelection = () => {}, addDate = () => {} } = props
+	const { columns, data, table, deleteSelection = () => {}, addData = () => {} } = props
 
 	const [columnVisibility, setColumnVisibility] = useState({})
 
@@ -104,7 +104,7 @@ const CuzomTable = (props: CuzomTableProps) => {
 					deleteSelection={deleteSelection}
 					globalFilter={setGlobalFilter}
 					columnFilters={setColumnFilters}
-					addData={addDate}
+					addData={addData}
 				/>
 			</section>
 

@@ -419,6 +419,11 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@juliendu11/network-devices-scanner-api@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@juliendu11/network-devices-scanner-api/-/network-devices-scanner-api-1.0.1.tgz#d18cdca74a3f96b5e3b2ade89bb998e781d12938"
+  integrity sha512-TzlF9+/RmknYCoqwgGL0Q9+OcyY0wQ2l6m6gCTtXLBA1GQgHS0ng5jV/eVvV6v+xgb+KPVUeDgHq10lnbzqSqw==
+
 "@mui/base@5.0.0-alpha.82":
   version "5.0.0-alpha.82"
   resolved "https://registry.yarnpkg.com/@mui/base/-/base-5.0.0-alpha.82.tgz#19645af6790a79587517a5782ee32bf9ab7f7ac8"

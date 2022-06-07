@@ -1,7 +1,7 @@
 export * from './user'
 export * from './response'
 export * from './ipType'
-
+export * from './devices'
 // Response success
 export interface Res<T> {
 	success: boolean

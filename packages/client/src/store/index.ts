@@ -2,15 +2,17 @@ import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
 import noticeReducer from './notice'
-import userReducer from './user'
+import usersReducer from './user'
+import devicesReducer from './devices'
 
 // import documentReducer from './document'
 
 const store = configureStore({
 	reducer: {
 		// document: documentReducer,
-		users: userReducer,
+		users: usersReducer,
 		notice: noticeReducer,
+		devices: devicesReducer,
 	},
 	middleware: [],
 })
