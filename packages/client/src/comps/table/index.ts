@@ -1,5 +1,9 @@
-import Table, { createCuzomTable } from './Table'
+import Table, { createTableInstance } from './Table'
 
-export { createCuzomTable }
-export { createRowSelection } from './createTableColumns'
+export { createTableInstance }
+
+export { createRowSelection } from './TableColumnDefault'
+
+export type { TableToolbarExtensions } from './TableToolbar'
+
 export default Table

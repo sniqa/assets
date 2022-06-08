@@ -1,10 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
-import Table, { createCuzomTable, createRowSelection } from '../comps/table'
+import Table, { createTableInstance, createRowSelection } from '../comps/table'
 import { DeviceInfoWithId } from '@assets/types'
 import { useAppDispatch, useAppSelector } from '../store'
 import { Button } from '@mui/material'
 
-const table = createCuzomTable<DeviceInfoWithId>()
+const table = createTableInstance<DeviceInfoWithId>()
 
 const Devices = () => {
 	const devices = useAppSelector((state) => state.devices)

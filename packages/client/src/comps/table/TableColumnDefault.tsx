@@ -1,4 +1,4 @@
-import CuzomCheckbox from './CuzomCheckbox'
+import CuzomCheckbox from './TableCheckbox'
 
 export const createRowSelection = () => {
 	return {

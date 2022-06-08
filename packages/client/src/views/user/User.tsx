@@ -1,14 +1,16 @@
-import { Button } from '@mui/material'
+import { Button, Dialog } from '@mui/material'
 import { Row } from '@tanstack/react-table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { UserInfoWitId } from '@assets/types'
-import Table, { createCuzomTable, createRowSelection } from '../comps/table'
-import { _fetch } from '../apis/fetch'
-import { useAppDispatch, useAppSelector } from '../store'
-import { notice } from '../apis/mitt'
-import { addUser, deleteManyUser, setUsers } from '../store/user'
+import Table, { createTableInstance, createRowSelection, type TableToolbarExtensions } from '../../comps/table'
+import { _fetch } from '../../apis/fetch'
+import { useAppDispatch, useAppSelector } from '../../store'
+import { notice } from '../../apis/mitt'
+import { addUser, deleteManyUser, setUsers } from '../../store/user'
+import AddIcon from '@mui/icons-material/Add'
+import UserDetail from './UserDetail'
 
-const table = createCuzomTable<UserInfoWitId>()
+const table = createTableInstance<UserInfoWitId>()
 
 const User = () => {
 	const users = useAppSelector((state) => state.users)
@@ -44,6 +46,11 @@ const User = () => {
 				),
 			}),
 		],
+		[]
+	)
+
+	const extensions: TableToolbarExtensions = useMemo(
+		() => [{ title: '添加用户', icon: <AddIcon color="primary" />, extension: <UserDetail /> }],
 		[]
 	)
 
@@ -103,6 +110,7 @@ const User = () => {
 				data={users}
 				addData={addUserCallback}
 				deleteSelection={deleteSelectUser}
+				extensions={extensions}
 			/>
 		</div>
 	)

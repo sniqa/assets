@@ -1,4 +1,5 @@
-导航项 .nav-item-selected {
+/* 导航项 */
+.nav-item-selected {
 	background-color: #e9eef3;
 	position: relative;
 }
@@ -77,20 +78,20 @@ th {
 	text-align: start;
 }
 
-input[type='checkbox'] {
+.cuzom-checkbox {
 	top: 3px;
-	width: 18px;
-	height: 18px;
+	width: 16px;
+	height: 16px;
 	position: relative;
 	cursor: pointer;
 }
 
-input[type='checkbox']::before,
-input[type='checkbox']::after {
+.cuzom-checkbox::before,
+.cuzom-checkbox::after {
 	position: absolute;
 	top: 0;
-	width: 18px;
-	height: 18px;
+	width: 16px;
+	height: 16px;
 	visibility: visible;
 	display: inline-flex;
 	justify-content: center;
@@ -99,7 +100,7 @@ input[type='checkbox']::after {
 	box-sizing: border-box;
 }
 
-input[type='checkbox']:checked::before {
+.cuzom-checkbox:checked::before {
 	content: '✓';
 	color: #fff;
 	font-size: 18px;
@@ -108,10 +109,11 @@ input[type='checkbox']:checked::before {
 	background-color: #1976d2;
 }
 
-input[type='checkbox']:indeterminate::after {
+.cuzom-checkbox:indeterminate::after {
 	content: '一';
 	color: #fff;
-	font-size: 10px;
+	font-size: 15px;
+	line-height: 16px;
 	font-weight: 900;
 	top: 0;
 	background-color: #1976d2;

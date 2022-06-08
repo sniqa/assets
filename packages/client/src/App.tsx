@@ -13,7 +13,7 @@ import LeftSideNav from './comps/nav/LeftSidebarNav'
 const Network = lazy(() => import('./views/Network'))
 const NotFound = lazy(() => import('./views/NotFound'))
 
-const User = lazy(() => import('./views/User'))
+const User = lazy(() => import('./views/user/User'))
 const Message = lazy(() => import('./views/Message'))
 const Devices = lazy(() => import('./views/Devices'))
 
