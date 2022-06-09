@@ -2306,6 +2306,11 @@ nanoid@^3.3.4:
   resolved "https://registry.yarnpkg.com/nanoid/-/nanoid-3.3.4.tgz#730b67e3cd09e2deacf03c027c81c9d9dbc5e8ab"
   integrity sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==
 
+nanoid@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmmirror.com/nanoid/-/nanoid-4.0.0.tgz#6e144dee117609232c3f415c34b0e550e64999a5"
+  integrity sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==
+
 negotiator@0.6.3:
   version "0.6.3"
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.3.tgz#58e323a72fedc0d6f9cd4d31fe49f51479590ccd"
@@ -3010,9 +3015,9 @@ wrappy@1:
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 
-ws@^8.6.0:
+ws@^8.7.0:
   version "8.7.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.7.0.tgz#eaf9d874b433aa00c0e0d8752532444875db3957"
+  resolved "https://registry.npmmirror.com/ws/-/ws-8.7.0.tgz#eaf9d874b433aa00c0e0d8752532444875db3957"
   integrity sha512-c2gsP0PRwcLFzUiA8Mkr37/MI7ilIlHQxaEAtd0uNMbVMoy8puJyafRlm0bV9MbGSabUPeLrRRaqIBcFcA2Pqg==
 
 y18n@^5.0.5:

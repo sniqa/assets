@@ -1,43 +1,81 @@
-import { Button, IconButton, Input, InputBase, TextField, TextFieldProps, Typography } from '@mui/material'
+import {
+	Button,
+	Dialog,
+	IconButton,
+	Input,
+	InputBase,
+	Slide,
+	TextField,
+	TextFieldProps,
+	Typography,
+} from '@mui/material'
 import CloseIcon from '@mui/icons-material/Close'
-import React, { useRef, MouseEvent, ReactNode, useState } from 'react'
+import React, { useRef, MouseEvent, ReactNode, useState, forwardRef } from 'react'
 import { UserInfoWitId } from '@assets/types'
+import { TransitionProps } from '@mui/material/transitions'
 
 interface UserDetailProps {
 	title: string
-	userInfo: UserInfoWitId
+	userInfo?: UserInfoWitId
+	open?: boolean
+	close?: () => void
+	onClick?: (userInfo: UserInfoWitId) => void
 }
 
 const UserDetail = (props: UserDetailProps) => {
-	const { title, userInfo = {} } = props
+	const { title, userInfo = {}, open = true, close = () => {}, onClick = () => {} } = props
 
 	const [userInfomation, setUserInfomation] = useState<UserInfoWitId>(userInfo)
 
-	const closeBtnRef = useRef<SVGSVGElement | null>(null)
-
 	return (
-		<div onClick={(e) => !closeBtnRef.current?.contains(e.target as Node) && e.stopPropagation()}>
+		<Dialog TransitionComponent={Transition} keepMounted open={open} fullWidth>
 			<section className="flex justify-between p-2">
-				<Typography>{title}</Typography>
+				<Typography sx={{ fontSize: '1.6rem' }} className={`p-2 pl-4 text-blue-500`}>
+					{title}
+				</Typography>
 
-				<IconButton>
-					<CloseIcon ref={closeBtnRef} />
-				</IconButton>
+				<div className="">
+					<IconButton onClick={() => close()}>
+						<CloseIcon />
+					</IconButton>
+				</div>
 			</section>
 
 			<section className="flex flex-wrap items-center p-4">
-				<CuzomInput label={`用户名称`} size="small" />
-				<CuzomInput label={`用户名称`} size="small" />
-				<CuzomInput label={`用户名称`} size="small" />
-				<CuzomInput label={`用户名称`} size="small" />
-				<CuzomInput label={`用户名称`} size="small" last />
+				<CuzomInput
+					label={`用户名称`}
+					size="small"
+					value={userInfomation.username || ''}
+					onChange={(e) => setUserInfomation({ ...userInfomation, username: e.target.value })}
+				/>
+				<CuzomInput
+					label={`昵称`}
+					size="small"
+					value={userInfomation.nickname || ''}
+					onChange={(e) => setUserInfomation({ ...userInfomation, nickname: e.target.value })}
+				/>
+				<CuzomInput
+					label={`工号`}
+					size="small"
+					value={userInfomation.number || ''}
+					onChange={(e) => setUserInfomation({ ...userInfomation, number: parseInt(e.target.value) })}
+				/>
+				<CuzomInput
+					label={`部门`}
+					size="small"
+					value={userInfomation.department || ''}
+					onChange={(e) => setUserInfomation({ ...userInfomation, department: e.target.value })}
+					last
+				/>
+				{/* <CuzomInput label={`用户名称`} size="small" /> */}
+				{/* <CuzomInput label={`用户名称`} size="small" last /> */}
 			</section>
 
 			<section className="flex justify-end items-center p-2">
-				<Button variant="outlined" sx={{ mr: '1rem' }}>{`重置`}</Button>
-				<Button variant="contained" disableElevation>{`确定`}</Button>
+				<Button variant="outlined" sx={{ mr: '1rem' }} onClick={() => setUserInfomation({})}>{`重置`}</Button>
+				<Button variant="contained" disableElevation onClick={() => onClick(userInfomation)}>{`确定`}</Button>
 			</section>
-		</div>
+		</Dialog>
 	)
 }
 
@@ -55,3 +93,12 @@ const CuzomInput = (props: TextFieldProps & LastItem) => {
 		</div>
 	)
 }
+
+const Transition = forwardRef(function Transition(
+	props: TransitionProps & {
+		children: React.ReactElement<any, any>
+	},
+	ref: React.Ref<unknown>
+) {
+	return <Slide direction="up" ref={ref} {...props} />
+})

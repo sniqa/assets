@@ -20,15 +20,13 @@ import { useEffect, useState } from 'react'
 import MyTable from './TableContainer'
 
 import { defaultScrollbar } from '../../config'
-import TableToolbar, { TableToolbarExtensions } from './TableToolbar'
+import TableToolbar, { TableToolbarProps } from './TableToolbar'
 
 interface CuzomTableProps {
 	columns: ColumnDef<any>[]
 	data: any[]
 	table: Table<any>
-	deleteSelection?: (rows: Row<any>[]) => void
-	addData?: <T>(data: T) => void
-	extensions?: TableToolbarExtensions
+	toolbar?: Omit<TableToolbarProps, 'instance'>
 }
 
 export const createTableInstance = <T extends Record<string, any> = {}>() =>
@@ -66,7 +64,7 @@ export const createTableInstance = <T extends Record<string, any> = {}>() =>
 		})
 
 const CuzomTable = (props: CuzomTableProps) => {
-	const { columns, data, table, deleteSelection = () => {}, addData = () => {}, extensions } = props
+	const { columns, data, table, toolbar } = props
 
 	const [columnVisibility, setColumnVisibility] = useState({})
 
@@ -102,11 +100,9 @@ const CuzomTable = (props: CuzomTableProps) => {
 			<section>
 				<TableToolbar
 					instance={instance}
-					deleteSelection={deleteSelection}
 					globalFilter={setGlobalFilter}
 					columnFilters={setColumnFilters}
-					addData={addData}
-					extensions={extensions}
+					{...toolbar}
 				/>
 			</section>
 

@@ -6,9 +6,12 @@ import Table, { createTableInstance, createRowSelection, type TableToolbarExtens
 import { _fetch } from '../../apis/fetch'
 import { useAppDispatch, useAppSelector } from '../../store'
 import { notice } from '../../apis/mitt'
-import { addUser, deleteManyUser, setUsers } from '../../store/user'
+import { addUser, deleteManyUser, setUsers, updateUser } from '../../store/user'
 import AddIcon from '@mui/icons-material/Add'
 import UserDetail from './UserDetail'
+
+const USER_DETAIL_EDIT_INDEX = 2
+const USER_DETAIL_ADD_INDEX = 3
 
 const table = createTableInstance<UserInfoWitId>()
 
@@ -16,6 +19,16 @@ const User = () => {
 	const users = useAppSelector((state) => state.users)
 
 	const dispatch = useAppDispatch()
+
+	// 根据index的值去显示对应的页面
+	const [itemMapIndex, setItemMapIndex] = useState(0)
+
+	const [curUserDetailInfo, setCurUserDetailInfo] = useState<UserInfoWitId>({})
+
+	const onUserDetail = (index: number, userInfo: UserInfoWitId) => {
+		setCurUserDetailInfo(userInfo)
+		setItemMapIndex(index)
+	}
 
 	const columns = useMemo(
 		() => [
@@ -40,17 +53,12 @@ const User = () => {
 				header: () => <span className="pl-2">{`操作`}</span>,
 				cell: (info) => (
 					<div className="">
-						<Button>编辑</Button>
+						<Button onClick={() => onUserDetail(USER_DETAIL_EDIT_INDEX, info.row.original || {})}>编辑</Button>
 						<Button></Button>
 					</div>
 				),
 			}),
 		],
-		[]
-	)
-
-	const extensions: TableToolbarExtensions = useMemo(
-		() => [{ title: '添加用户', icon: <AddIcon color="primary" />, extension: <UserDetail /> }],
 		[]
 	)
 
@@ -92,6 +100,35 @@ const User = () => {
 		})
 	}
 
+	const modifyUser = async (data: Partial<UserInfoWitId>) => {
+		const { modifyUser } = await _fetch({ modifyUser: data })
+
+		if (modifyUser.success) {
+			dispatch(updateUser(modifyUser.data))
+
+			return notice({
+				status: 'success',
+				message: '修改成功',
+			})
+		}
+
+		notice({
+			status: 'error',
+			message: '修改失败',
+		})
+	}
+
+	const extensions: TableToolbarExtensions = useMemo(
+		() => [
+			{
+				title: '添加用户',
+				icon: <AddIcon color="primary" />,
+				onClick: () => onUserDetail(USER_DETAIL_ADD_INDEX, {}),
+			},
+		],
+		[]
+	)
+
 	useEffect(() => {
 		const fetchUser = async () => {
 			const { findUser } = await _fetch({ findUser: {} })
@@ -108,10 +145,40 @@ const User = () => {
 				table={table}
 				columns={columns}
 				data={users}
-				addData={addUserCallback}
-				deleteSelection={deleteSelectUser}
-				extensions={extensions}
+				toolbar={{
+					deleteSelection: deleteSelectUser,
+					leftExtensions: extensions,
+				}}
 			/>
+
+			{/* 操作栏 */}
+			<div className="">
+				{(() => {
+					switch (itemMapIndex) {
+						case USER_DETAIL_EDIT_INDEX:
+							return (
+								<UserDetail
+									title="编辑用户"
+									open={itemMapIndex === USER_DETAIL_EDIT_INDEX}
+									close={() => setItemMapIndex(0)}
+									onClick={(userInfo) => modifyUser(userInfo)}
+									userInfo={curUserDetailInfo}
+								/>
+							)
+						case USER_DETAIL_ADD_INDEX:
+							return (
+								<UserDetail
+									title="添加用户"
+									open={itemMapIndex === USER_DETAIL_ADD_INDEX}
+									close={() => setItemMapIndex(0)}
+									onClick={(userInfo) => addUserCallback(userInfo)}
+								/>
+							)
+						default:
+							return <div className=""></div>
+					}
+				})()}
+			</div>
 		</div>
 	)
 }

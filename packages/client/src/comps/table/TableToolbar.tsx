@@ -11,8 +11,9 @@ import {
 	Tooltip,
 	Backdrop,
 	Dialog,
+	Slide,
 } from '@mui/material'
-import { Dispatch, useMemo, useState } from 'react'
+import { Dispatch, forwardRef, useMemo, useState } from 'react'
 import AnimateWraper from '../animate/AnimateWraper'
 import { ColumnFiltersState, filterFns, Row, TableInstance } from '@tanstack/react-table'
 import DeleteIcon from '@mui/icons-material/Delete'
@@ -24,6 +25,7 @@ import ShowField from './TableColumnField'
 import AddDialog from './AddDialog'
 import { downloadTable } from './share'
 import { notice } from '../../apis/mitt'
+import { TransitionProps } from '@mui/material/transitions'
 
 const SEARCH_INDEX = 1
 const FILTER_INDEX = 2
@@ -39,32 +41,30 @@ const FILE_UPLOAD_TOOLTIP = '导入文件'
 interface TableToolbarExtension {
 	icon: JSX.Element
 	title: string
-	extension: JSX.Element
+	onClick?: () => void
 }
 
 export type TableToolbarExtensions = Array<TableToolbarExtension>
 
-interface TableToolbarProps {
+export interface TableToolbarProps {
 	instance: TableInstance<any>
-	deleteSelection?: (selectionRow: Row<any>[]) => void
 	globalFilter?: Dispatch<React.SetStateAction<string>>
 	columnFilters?: React.Dispatch<React.SetStateAction<ColumnFiltersState>>
-	addData?: <T>(data: T) => void
-	extensions?: TableToolbarExtensions
+	deleteSelection?: (selectionRow: Row<any>[]) => void
+	leftExtensions?: TableToolbarExtensions
+	rightExtensions?: TableToolbarExtensions
 }
 
 const TableToolbar = ({
 	instance,
 	deleteSelection = () => {},
 	globalFilter = () => {},
-	addData = () => {},
-	extensions = [],
+	leftExtensions = [],
+	rightExtensions = [],
 }: TableToolbarProps) => {
 	const [expanded, setExpanded] = useState(false)
 
 	const [curDisplay, setCurDisplay] = useState(0)
-
-	const [curExtensionIndex, setCurExtensionIndex] = useState(0)
 
 	const [dialogOpen, setDialogOpen] = useState(false)
 
@@ -87,126 +87,105 @@ const TableToolbar = ({
 	}
 
 	return (
-		<div className="">
-			<Accordion expanded={expanded} elevation={0}>
-				{/* 显示图标 */}
-				<AccordionSummary sx={{ display: 'flex' }}>
-					<section className="flex justify-center items-center">
-						{/* 删除  */}
-						<Tooltip title={DELETE_SELECTION_ROWS_TOOLTIP}>
-							<div className={disabledStatus.cursor}>
-								<IconButton onClick={() => deleteSelectRows()} disabled={isSelectionEmpty}>
-									{isSelectionEmpty ? <DeleteOutlineIcon color="action" /> : <DeleteIcon />}
-								</IconButton>
-							</div>
-						</Tooltip>
+		<Accordion expanded={expanded} elevation={0}>
+			{/* 显示图标 */}
+			<AccordionSummary sx={{ display: 'flex' }}>
+				<section className="flex justify-center items-center">
+					{/* 删除  */}
+					<Tooltip title={DELETE_SELECTION_ROWS_TOOLTIP}>
+						<div className={disabledStatus.cursor}>
+							<IconButton onClick={() => deleteSelectRows()} disabled={isSelectionEmpty}>
+								{isSelectionEmpty ? <DeleteOutlineIcon color="action" /> : <DeleteIcon />}
+							</IconButton>
+						</div>
+					</Tooltip>
 
-						{/* 添加 */}
-						<Tooltip title={ADD_TOOLTIP}>
+					{/* 导出至csv文件 */}
+					<Tooltip title={FILE_DOWNLOAD_TOOLTIP}>
+						<div className={disabledStatus.cursor}>
 							<IconButton
 								onClick={() => {
-									setCurDisplay(ADD_INDEX), setDialogOpen(true)
+									notice({ status: 'success', message: '导出成功, 请稍后...' })
+									downloadTable({ instance })
 								}}
+								disabled={isSelectionEmpty}
 							>
-								<AddIcon color="primary" />
+								<FileDownloadIcon color={disabledStatus.color as any} />
 							</IconButton>
-						</Tooltip>
+						</div>
+					</Tooltip>
 
-						{/* 自定义功能区  */}
-						{extensions &&
-							extensions.map((extension, index) => (
-								<Tooltip title={extension.title} key={index}>
-									<IconButton onClick={() => setCurExtensionIndex(index + 1)}>{extension.icon}</IconButton>
-								</Tooltip>
-							))}
-
-						{/* 导出至csv文件 */}
-						<Tooltip title={FILE_DOWNLOAD_TOOLTIP}>
-							<div className={disabledStatus.cursor}>
-								<IconButton
-									onClick={() => {
-										notice({ status: 'success', message: '导出成功, 请稍后...' })
-										downloadTable({ instance })
-									}}
-									disabled={isSelectionEmpty}
-								>
-									<FileDownloadIcon color={disabledStatus.color as any} />
-								</IconButton>
-							</div>
-						</Tooltip>
-
-						{/* 导入文件 */}
-						<Tooltip title={FILE_UPLOAD_TOOLTIP}>
-							<div className="cursor-not-allowed">
-								<IconButton disabled>
-									<FileUploadIcon color={`disabled`} />
-								</IconButton>
-							</div>
-						</Tooltip>
-					</section>
-
-					<section className="flex-grow" />
-
-					<section>
-						{/* 搜索 */}
-						<Tooltip title={SEARCH_ICON_TOOLTIP}>
-							<IconButton onClick={() => openAndDisplay(SEARCH_INDEX)}>
-								{expanded && curDisplay === SEARCH_INDEX ? (
-									<SearchOffIcon color="primary" />
-								) : (
-									<SearchIcon color="primary" />
-								)}
+					{/* 导入文件 */}
+					<Tooltip title={FILE_UPLOAD_TOOLTIP}>
+						<div className="cursor-not-allowed">
+							<IconButton disabled>
+								<FileUploadIcon color={`disabled`} />
 							</IconButton>
-						</Tooltip>
+						</div>
+					</Tooltip>
 
-						{/* 选择字段 */}
-						<Tooltip title={FILTER_ICON_TOOLTIP}>
-							<IconButton onClick={() => openAndDisplay(FILTER_INDEX)}>
-								{expanded && curDisplay === FILTER_INDEX ? (
-									<FilterListOffIcon color="primary" />
-								) : (
-									<FilterListIcon color="primary" />
-								)}
-							</IconButton>
-						</Tooltip>
-					</section>
-				</AccordionSummary>
+					{/* 左边自定义功能区  */}
+					{leftExtensions &&
+						leftExtensions.map((extension, index) => (
+							<Tooltip title={extension.title} key={index}>
+								<IconButton onClick={() => extension.onClick && extension.onClick()}>{extension.icon}</IconButton>
+							</Tooltip>
+						))}
+				</section>
 
-				{/* 内容 */}
-				<AccordionDetails>
-					{(() => {
-						switch (curDisplay) {
-							case SEARCH_INDEX:
-							default:
-								return (
-									<div className="flex justify-center">
-										<TextField size="small" label={`查找`} onChange={(e) => globalFilter(e.target.value)} />
-									</div>
-								)
+				<section className="flex-grow" />
 
-							case FILTER_INDEX:
-								return <ShowField tableInstance={instance} />
+				<section>
+					{/* 搜索 */}
+					<Tooltip title={SEARCH_ICON_TOOLTIP}>
+						<IconButton onClick={() => openAndDisplay(SEARCH_INDEX)}>
+							{expanded && curDisplay === SEARCH_INDEX ? (
+								<SearchOffIcon color="primary" />
+							) : (
+								<SearchIcon color="primary" />
+							)}
+						</IconButton>
+					</Tooltip>
 
-							case ADD_INDEX:
-								return <AddDialog instance={instance} open={dialogOpen} close={setDialogOpen} addData={addData} />
-						}
-					})()}
-				</AccordionDetails>
-			</Accordion>
+					{/* 选择字段 */}
+					<Tooltip title={FILTER_ICON_TOOLTIP}>
+						<IconButton onClick={() => openAndDisplay(FILTER_INDEX)}>
+							{expanded && curDisplay === FILTER_INDEX ? (
+								<FilterListOffIcon color="primary" />
+							) : (
+								<FilterListIcon color="primary" />
+							)}
+						</IconButton>
+					</Tooltip>
 
-			<section>
-				{extensions.length > 0 && (
-					<Dialog
-						open={curExtensionIndex > 0}
-						onClick={() => setCurExtensionIndex(0)}
-						// sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-						fullWidth
-					>
-						<div className="w-full">{curExtensionIndex > 0 && extensions[curExtensionIndex - 1].extension}</div>
-					</Dialog>
-				)}
-			</section>
-		</div>
+					{/* 右边自定义功能区  */}
+					{rightExtensions &&
+						rightExtensions.map((extension, index) => (
+							<Tooltip title={extension.title} key={index}>
+								<IconButton onClick={() => extension.onClick && extension.onClick()}>{extension.icon}</IconButton>
+							</Tooltip>
+						))}
+				</section>
+			</AccordionSummary>
+
+			{/* 内容 */}
+			<AccordionDetails>
+				{(() => {
+					switch (curDisplay) {
+						case SEARCH_INDEX:
+						default:
+							return (
+								<div className="flex justify-center">
+									<TextField size="small" label={`查找`} onChange={(e) => globalFilter(e.target.value)} />
+								</div>
+							)
+
+						case FILTER_INDEX:
+							return <ShowField tableInstance={instance} />
+					}
+				})()}
+			</AccordionDetails>
+		</Accordion>
 	)
 }
 

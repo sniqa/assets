@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
-import Table, { createTableInstance, createRowSelection } from '../comps/table'
+import Table, { createTableInstance, createRowSelection, TableToolbarExtensions } from '../../comps/table'
 import { DeviceInfoWithId } from '@assets/types'
-import { useAppDispatch, useAppSelector } from '../store'
+import { useAppDispatch, useAppSelector } from '../../store'
 import { Button } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import OutboxIcon from '@mui/icons-material/Outbox'
+import { send } from '../../apis/ws'
 
 const table = createTableInstance<DeviceInfoWithId>()
 
@@ -59,13 +62,44 @@ const Devices = () => {
 		[]
 	)
 
+	const wsTest = async () => {
+		const res = await send({ hello: 'world' })
+
+		console.log('res', res)
+	}
+
+	const extensions: TableToolbarExtensions = useMemo(
+		() => [
+			{
+				title: '添加设备',
+				icon: <AddIcon color="primary" />,
+			},
+			{
+				title: '设备信息收集工具',
+				icon: <OutboxIcon color="primary" />,
+				onClick: () => wsTest(),
+			},
+		],
+		[]
+	)
+
 	const deleteSelection = () => {}
 
 	const addData = () => {}
 
 	useEffect(() => {}, [])
 
-	return <Table columns={columns} data={devices} table={table} deleteSelection={deleteSelection} addData={addData} />
+	return (
+		<Table
+			columns={columns}
+			data={devices}
+			table={table}
+			toolbar={{
+				deleteSelection: deleteSelection,
+				leftExtensions: extensions,
+			}}
+		/>
+	)
 }
 
 export default Devices

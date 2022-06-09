@@ -4,7 +4,6 @@ import { WithId } from './common'
 export interface UserInfo {
 	account?: string
 	username?: string
-
 	nickname?: string
 	number?: number
 	department?: string

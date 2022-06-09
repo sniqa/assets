@@ -15,7 +15,7 @@ const NotFound = lazy(() => import('./views/NotFound'))
 
 const User = lazy(() => import('./views/user/User'))
 const Message = lazy(() => import('./views/Message'))
-const Devices = lazy(() => import('./views/Devices'))
+const Devices = lazy(() => import('./views/devices/Devices'))
 
 const IpType = lazy(() => import('./views/networkSubpage/IpType'))
 const IpMonitor = lazy(() => import('./views/networkSubpage/IpMonitor'))

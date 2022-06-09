@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react'
 import type { IpTypeInfoWithId, IpTypeInfo } from '@assets/types'
-import Table, { createRowSelection, createCuzomTable } from '../../comps/table'
+import Table, { createRowSelection, createTableInstance } from '../../comps/table'
 import { Row } from '@tanstack/react-table'
 
-const table = createCuzomTable<IpTypeInfoWithId>()
+const table = createTableInstance<IpTypeInfoWithId>()
 
 const IpType = () => {
 	const [rows, setRows] = useState([])
@@ -49,7 +49,7 @@ const IpType = () => {
 
 	const deleteSelection = (rows: Row<any>[]) => {}
 
-	return <Table columns={columns} data={rows} table={table} addDate={addIpType} deleteSelection={deleteSelection} />
+	return <Table columns={columns} data={rows} table={table} addData={addIpType} deleteSelection={deleteSelection} />
 }
 
 export default IpType
