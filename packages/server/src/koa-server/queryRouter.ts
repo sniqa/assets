@@ -5,6 +5,7 @@ import { ServerConfig } from './serverConfig'
 import { dispatch, regeister } from './jsonRouter'
 import { isObject } from '@assets/share'
 import * as user from '../controller/user'
+import * as device from '../controller/devices'
 // import * as netType from '../controller/netType'
 // import * as document from '../controller/document'
 // import * as ipAddress from '../controller/ipAddress'
@@ -13,14 +14,16 @@ import * as user from '../controller/user'
 regeister({
 	test: () => 'hello',
 	...user,
+	...device,
 })
 
 const queryRouter = new Router()
 
-queryRouter.post(
-	`${ServerConfig.QUERY_SERVER_ROUTE}`,
-	async (ctx) => (ctx.response.body = await gateway(ctx).catch((err) => console.log(err)))
-)
+queryRouter.post(`${ServerConfig.QUERY_SERVER_ROUTE}`, async (ctx) => {
+	ctx.response.body = await gateway(ctx).catch((err) => console.log(err))
+})
+
+queryRouter.get(`${ServerConfig.QUERY_SERVER_ROUTE}`, (ctx) => (ctx.response.body = 'pong'))
 
 queryRouter.get('/test', (ctx) => (ctx.response.body = 'Hello, this is test of router /test'))
 

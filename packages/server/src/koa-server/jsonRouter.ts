@@ -13,6 +13,8 @@ export const dispatch = async (target: object) => {
 				return Reflect.set(target, ctlName, 'The controller not exist')
 			}
 
+			console.log(value)
+
 			const ctl = controllerMap.get(ctlName)
 
 			return Reflect.set(target, ctlName, await ctl(value))
