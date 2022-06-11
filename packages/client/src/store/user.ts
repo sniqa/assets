@@ -12,7 +12,7 @@ export const UserSlice = createSlice({
 			return (state = action.payload)
 		},
 		addUser: (state, action: PayloadAction<UserInfo>) => {
-			return [action.payload, ...state]
+			return [...state, action.payload]
 		},
 		updateUser: (state, action: PayloadAction<UserInfoWitId>) => {
 			return state.map((user) => (user._id === action.payload._id ? { ...user, ...action.payload } : user))

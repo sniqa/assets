@@ -1,11 +1,10 @@
 import { falseRes, ErrorType } from '@assets/error'
 import { notice } from './mitt'
 
-const port = 19800
+import { httpConfig } from './serverConfig'
 
-const router = '/phl'
 
-const url = `http://${location.hostname}:${port}${router}`
+const url = `http://${httpConfig.hostname}:${httpConfig.port}${httpConfig.path}`
 
 // fetch second argument
 const init = (data: Record<string, any>): RequestInit => ({

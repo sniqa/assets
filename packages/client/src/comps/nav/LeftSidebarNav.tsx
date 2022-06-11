@@ -64,14 +64,16 @@ const settings: LeftSidebarItemProps = {
 }
 
 const LeftSidebarNav = () => {
-	const [shrink, setShrink] = useState(false)
+	const [shrink, setShrink] = useState(true)
 
 	return (
 		<div className={`${shrink ? 'w-16rem' : 'w-3rem'} overflow-hidden width-translate flex flex-col`}>
 			<section className={`flex items-center justify-center`}>
-				<IconButton title={`${shrink ? '缩小' : '扩大'}`} onClick={() => setShrink(!shrink)}>
-					{shrink ? <ZoomInMapIcon /> : <ZoomOutMapIcon />}
-				</IconButton>
+				<Tooltip  title={`${shrink ? '缩小' : '扩大'}`}>
+					<IconButton onClick={() => setShrink(!shrink)}>
+						{shrink ? <ZoomInMapIcon /> : <ZoomOutMapIcon />}
+					</IconButton>
+				</Tooltip>
 			</section>
 
 			<section className="flex-grow">

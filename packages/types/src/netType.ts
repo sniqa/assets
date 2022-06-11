@@ -8,9 +8,11 @@ interface IpInfo {
 	dns?: string[]
 }
 
-export interface IpTypeInfo {
+export interface NetType{
 	typeName?: string
 	desc?: string
 }
 
-export type IpTypeInfoWithId = IpTypeInfo & IpInfo & WithId
+export type NetTypeInfo = NetType & IpInfo
+
+export type NetTypeInfoWithId = NetTypeInfo & WithId

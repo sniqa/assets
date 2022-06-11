@@ -1,12 +1,12 @@
 import { falseRes, trueRes, ErrorType } from '@assets/error'
 import { hasKeys } from '@assets/share'
-import { DeviceInfoWithId, DeviceInfo } from '@assets/types'
 import { ObjectId } from 'mongodb'
 import MongoDb from '../mongo'
+import { NetTypeInfoWithId, NetTypeInfo } from '@assets/types'
 
-const DEVICES_COLLECTION_NAME = 'devices'
+const NET_TYPE_COLLECTION_NAME = 'netTypes'
 
-const DeviceModel = MongoDb.collection<DeviceInfo>(DEVICES_COLLECTION_NAME)
+const DeviceModel = MongoDb.collection<NetTypeInfo>(NET_TYPE_COLLECTION_NAME)
 
 
 // 上传设备信息
@@ -19,7 +19,7 @@ export const uploadDeviceInfo = async (data: any) => {
 
 
 // 创建设备
-export const createDevice = async (data: DeviceInfo) => {
+export const createDevice = async (data: NetTypeInfo) => {
 	if(!hasKeys(data, '')) {
 		return falseRes(ErrorType.MISSING_PARAMS)
 	}
@@ -36,7 +36,7 @@ export const createDevice = async (data: DeviceInfo) => {
 }
 
 // 删除设备
-export const deleteDevice = async (data:  Array<Partial<DeviceInfoWithId>>) => {
+export const deleteDevice = async (data:  Array<Partial<NetTypeInfoWithId>>) => {
 	const ids = data.map((device) => new ObjectId(device._id))
 
 	const res = await DeviceModel.deleteMany({ _id: { $in: ids } })
@@ -45,7 +45,7 @@ export const deleteDevice = async (data:  Array<Partial<DeviceInfoWithId>>) => {
 }
 
 // 修改设备信息
-export const modifyDevice = async (data: Partial<DeviceInfoWithId>) => {
+export const modifyDevice = async (data: Partial<NetTypeInfoWithId>) => {
 	if (!hasKeys(data, '_id')) {
 		return falseRes(ErrorType.MISSING_PARAMS)
 	}

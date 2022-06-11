@@ -2,8 +2,6 @@ import {
 	Button,
 	Dialog,
 	IconButton,
-	Input,
-	InputBase,
 	Slide,
 	TextField,
 	TextFieldProps,

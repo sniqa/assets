@@ -2,10 +2,15 @@ import { useEffect, useMemo, useState } from 'react'
 import Table, { createTableInstance, createRowSelection, TableToolbarExtensions } from '../../comps/table'
 import { DeviceInfoWithId } from '@assets/types'
 import { useAppDispatch, useAppSelector } from '../../store'
-import { Button } from '@mui/material'
+import { Button, Link } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import OutboxIcon from '@mui/icons-material/Outbox'
 import { send } from '../../apis/ws'
+import { staticPath, deviceInfoToolName } from '../../apis/serverConfig'
+import DevicesDetail from './DevicesDetail'
+
+const DEVICE_EDIT_INDEX = 2
+const DEVICE_ADD_INDEX = 3
 
 const table = createTableInstance<DeviceInfoWithId>()
 
@@ -13,6 +18,15 @@ const Devices = () => {
 	const devices = useAppSelector((state) => state.devices)
 
 	const dispatch = useAppDispatch()
+
+	const [deviceDetailIndex, setDeviceDetailIndex] = useState(0)
+
+	const [curDeviceDetailInfo, setCurDeviceDetailInfo] = useState<DeviceInfoWithId>({})
+
+	const onDeviceDetail = (index: number, DeviceInfo: DeviceInfoWithId) => {
+		setCurDeviceDetailInfo(DeviceInfo)
+		setDeviceDetailIndex(index)
+	}
 
 	const columns = useMemo(
 		() => [
@@ -47,13 +61,10 @@ const Devices = () => {
 			}),
 			table.createDisplayColumn({
 				id: 'opration',
-				header: () => <span className="p-2">{`操作`}</span>,
+				header: () => <span className="pl-2">{`操作`}</span>,
 				cell: (info) => (
-					<div>
-						<Button></Button>
-						<Button>详情</Button>
-						<Button></Button>
-						<Button></Button>
+					<div className="">
+						<Button onClick={() => onDeviceDetail(DEVICE_EDIT_INDEX, info.row.original || {})}>编辑</Button>
 						<Button></Button>
 					</div>
 				),
@@ -62,22 +73,17 @@ const Devices = () => {
 		[]
 	)
 
-	const wsTest = async () => {
-		const res = await send({ hello: 'world' })
-
-		console.log('res', res)
-	}
-
 	const extensions: TableToolbarExtensions = useMemo(
 		() => [
 			{
 				title: '添加设备',
 				icon: <AddIcon color="primary" />,
+				onClick: () => setDeviceDetailIndex(DEVICE_ADD_INDEX)
 			},
 			{
 				title: '设备信息收集工具',
-				icon: <OutboxIcon color="primary" />,
-				onClick: () => wsTest(),
+				icon: <Link component={'a'} download target={`_blank`} href={`${staticPath}/${deviceInfoToolName}`} className={`w-full h-full flex justify-center items-center`}><OutboxIcon color="primary" /></Link> ,
+				// onClick: () => wsTest(),
 			},
 		],
 		[]
@@ -90,15 +96,31 @@ const Devices = () => {
 	useEffect(() => {}, [])
 
 	return (
-		<Table
-			columns={columns}
-			data={devices}
-			table={table}
-			toolbar={{
-				deleteSelection: deleteSelection,
-				leftExtensions: extensions,
-			}}
-		/>
+		<div className="flex flex-grow bg-light-50">
+
+			<Table
+				columns={columns}
+				data={devices}
+				table={table}
+				toolbar={{
+					deleteSelection: deleteSelection,
+					leftExtensions: extensions,
+				}}
+				/>
+
+			<div className="">
+				{(() => {
+					switch(deviceDetailIndex){
+						case DEVICE_EDIT_INDEX: {
+							return <DevicesDetail title={'编辑设备'} open={deviceDetailIndex === DEVICE_EDIT_INDEX} close={() => setDeviceDetailIndex(0)} />
+						}
+						case DEVICE_ADD_INDEX: {
+							return <DevicesDetail title={'添加设备'} open={deviceDetailIndex === DEVICE_ADD_INDEX} close={() => setDeviceDetailIndex(0)} />
+						}
+					}
+				})()}
+			</div>
+		</div>
 	)
 }
 

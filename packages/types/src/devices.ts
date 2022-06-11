@@ -8,12 +8,10 @@ enum DeviceType {
 }
 
 export interface DeviceInfo {
-	deviceName?: string
 	user?: string
-	deviceType?: DeviceType
-	location?: string
-	ipType?: string
-	useIp?: string
+	department?:string
+	mem?: object
+	osInfo: object
 	desc?: string
 }
 
