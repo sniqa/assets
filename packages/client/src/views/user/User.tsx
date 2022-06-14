@@ -140,7 +140,7 @@ const User = () => {
 	}, [])
 
 	return (
-		<div className="flex flex-grow bg-light-50">
+		<div className="flex flex-grow bg-light-50 w-full h-full overflow-auto">
 			<Table
 				table={table}
 				columns={columns}

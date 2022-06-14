@@ -17,7 +17,7 @@ const User = lazy(() => import('./views/user/User'))
 const Message = lazy(() => import('./views/Message'))
 const Devices = lazy(() => import('./views/devices/Devices'))
 
-const IpType = lazy(() => import('./views/networkSubpage/IpType'))
+const IpType = lazy(() => import('./views/networkSubpage/netType/NetType'))
 const IpMonitor = lazy(() => import('./views/networkSubpage/IpMonitor'))
 const IpOverview = lazy(() => import('./views/networkSubpage/IpOverview'))
 const IpRange = lazy(() => import('./views/networkSubpage/IpRange'))

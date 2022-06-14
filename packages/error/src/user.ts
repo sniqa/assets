@@ -36,36 +36,40 @@ export const ErrorType = {
 		errMsg: 'USER_LOGIN_PARAMS_ERROR',
 	},
 	REQUIRED_JSON: {
-		errCode: 901,
+		errCode: 1301,
 		errMsg: 'REQUIRED_JSON',
 	},
 	UNKOWN_ERROR: {
-		errCode: 902,
+		errCode: 1302,
 		errMsg: 'UNKOWN_ERROR',
 	},
 	NET_TYPE_REPEAT: {
-		errCode: 903,
+		errCode: 1303,
 		errMsg: 'NET_TYPE_REPEAT',
 	},
 	DENIED: {
-		errCode: 904,
+		errCode: 1304,
 		errMsg: 'DENIED',
 	},
 	REPEAT: {
-		errCode: 906,
+		errCode: 1306,
 		errMsg: 'REPEAT',
 	},
 	EMPTY: {
-		errCode: 907,
+		errCode: 1307,
 		errMsg: 'EMPTY',
 	},
 	MODIFY_ERROR: {
-		errCode: 908,
+		errCode: 1308,
 		errMsg: 'MODIFY_ERROR',
 	},
 	NETWORK_OR_SERVER_ERROR: {
-		errCode: 911,
+		errCode: 1311,
 		errMsg: 'Network error or Server not response!',
+	},
+	IP_FORMAT_ERROR: {
+		errCode: 1309,
+		errMsg: 'IP_FORMAT_ERROR',
 	},
 }
 

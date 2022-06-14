@@ -1,6 +1,7 @@
 import { Breadcrumbs, Typography, Button } from '@mui/material'
 import { Outlet, Link, useLocation } from 'react-router-dom'
 import NavigateNextIcon from '@mui/icons-material/NavigateNext'
+import { useEffect, useRef, useState } from 'react'
 
 const arrayFind = (target: string, source: Array<string>) => {
 	let temp = ''
@@ -45,7 +46,7 @@ const ContentLayout = () => {
 				</Breadcrumbs>
 			</section>
 
-			<section className="flex-grow flex  overflow-hidden reletive">
+			<section className="flex-grow overflow-hidden reletive flex">
 				<Outlet />
 			</section>
 		</main>

@@ -11,7 +11,11 @@ const BannerLayout = ({ header, main, notice }: BannerLayoutProps) => {
 		<Fragment>
 			{notice}
 			{header}
-			<div className="flex-grow flex">{main}</div>
+			<div
+				className={`flex-grow flex overflow-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-light-50 h-32`}
+			>
+				{main}
+			</div>
 		</Fragment>
 	)
 }

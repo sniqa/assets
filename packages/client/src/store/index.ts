@@ -1,20 +1,18 @@
 import { configureStore } from '@reduxjs/toolkit'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 
-import noticeReducer from './notice'
 import usersReducer from './user'
 import devicesReducer from './devices'
-
+import netTypeReducer from './netTypes'
 // import documentReducer from './document'
 
 const store = configureStore({
 	reducer: {
 		// document: documentReducer,
 		users: usersReducer,
-		notice: noticeReducer,
 		devices: devicesReducer,
+		netTypes: netTypeReducer,
 	},
-	middleware: [],
 })
 
 export type RootState = ReturnType<typeof store.getState>

@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion'
+import { ReactPropTypes } from 'react'
 
 interface AnimateWraperProps {
 	children: JSX.Element | Array<JSX.Element> | string

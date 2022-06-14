@@ -6,7 +6,8 @@ import { dispatch, regeister } from './jsonRouter'
 import { isObject } from '@assets/share'
 import * as user from '../controller/users'
 import * as device from '../controller/devices'
-// import * as netType from '../controller/netType'
+import * as netType from '../controller/netTypes'
+import * as task from '../controller/task'
 // import * as document from '../controller/document'
 // import * as ipAddress from '../controller/ipAddress'
 // import * as ping from '../controller/ping'
@@ -15,6 +16,8 @@ regeister({
 	test: () => 'hello',
 	...user,
 	...device,
+	...netType,
+	...task,
 })
 
 const queryRouter = new Router()
