@@ -14,6 +14,7 @@ const items = [
 	{ leftIcon: <CommitIcon />, title: '类型', detail: `IP类型`, to: RoutePath.IP_TYPE },
 	{ leftIcon: <CableIcon />, title: 'IP段', detail: `IP地址段的管理`, to: RoutePath.IP_RANGE },
 	{ leftIcon: <WifiFindIcon />, title: 'IP扫描器', detail: `对指定的ip范围进行扫描`, to: RoutePath.IP_SCANNER },
+	{ leftIcon: <WifiFindIcon />, title: '端口扫描器', detail: `对指定的ip扫描端口`, to: RoutePath.PORT_SCAN },
 	{ leftIcon: <MonitorHeartIcon />, title: 'IP监测', detail: `对指定的ip或或网站进行监测`, to: RoutePath.IP_MONITOR },
 	{ leftIcon: <HubIcon />, title: '网络结构', detail: `网络结构示意图`, to: RoutePath.IP_STRUCT },
 ]

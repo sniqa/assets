@@ -42,6 +42,9 @@ export enum RoutePath {
 	IP_STRUCT = 'ipstruct',
 	ROOT_IP_STRUCT = '/ipstruct',
 
+	PORT_SCAN = 'portscan',
+	ROOT_PORT_SCAN = '/portscan',
+
 	PLAN = 'plan',
 	ROOT_PLAN = '/plan',
 

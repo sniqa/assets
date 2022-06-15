@@ -23,6 +23,7 @@ const IpOverview = lazy(() => import('./views/networkSubpage/IpOverview'))
 const IpRange = lazy(() => import('./views/networkSubpage/IpRange'))
 const IpScanner = lazy(() => import('./views/networkSubpage/IpScanner'))
 const IpStruct = lazy(() => import('./views/networkSubpage/IpStruct'))
+const PortScanner = lazy(() => import('./views/networkSubpage/PortScanner'))
 
 const App = () => {
 	return (
@@ -58,6 +59,8 @@ const App = () => {
 						<Route path={RoutePath.IP_SCANNER} element={<SuspenseLoading element={<IpScanner />} />} />
 
 						<Route path={RoutePath.IP_STRUCT} element={<SuspenseLoading element={<IpStruct />} />} />
+
+						<Route path={RoutePath.PORT_SCAN} element={<SuspenseLoading element={<PortScanner />} />} />
 					</Route>
 
 					{/* 用户 */}

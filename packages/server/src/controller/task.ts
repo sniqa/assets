@@ -2,7 +2,8 @@ import { falseRes, ErrorType, trueRes } from '@assets/error'
 import { hasKeys } from '@assets/share'
 import ping from 'ping'
 import ip from 'ip'
-import { IpScanner } from '@assets/types'
+import { IpScanner, PortScanner } from '@assets/types'
+import { nodePortScanner } from '../common/node-port-scanner'
 
 export const ipScanner = async (data: IpScanner) => {
 	if (!hasKeys(data, 'ipStart')) {
@@ -37,4 +38,26 @@ const getCountForIpRange = (start: string, end: string) => {
 	}
 
 	return ipRange
+}
+
+export const portScanner = async (data: PortScanner) => {
+	if (!hasKeys(data, 'ipAddrs', 'ports')) {
+		return falseRes(ErrorType.MISSING_PARAMS)
+	}
+
+	const { ipAddrs, ports } = data
+
+	if (ipAddrs.addrs) {
+		if (ports.ports) {
+			const portArr = ports.ports.split(',').map((portStr) => parseInt(portStr))
+			const hostArr = ipAddrs.addrs.split(',')
+			console.log(portArr)
+
+			const res = await Promise.all(hostArr.map((host) => nodePortScanner(host, portArr)))
+
+			console.log(res)
+
+			return trueRes(res)
+		}
+	}
 }
