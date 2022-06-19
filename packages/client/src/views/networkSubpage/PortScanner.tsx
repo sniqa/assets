@@ -24,6 +24,12 @@ const PortScanner = () => {
 				ports: curScanPort,
 			},
 		})
+
+		console.log(portScanner)
+
+		// if (portScanner.success) {
+		// 	console.log(portScanner)
+		// }
 	}
 
 	return (
@@ -44,14 +50,14 @@ const PortScanner = () => {
 						<span className="px-4 py-2 inline-flex h-3rem items-center">{`或`}</span>
 						<TextField
 							size="small"
-							label="开始地址"
+							label="开始地址(包含)"
 							className="w-12rem"
 							onChange={(e) => setCurScanIp({ ...curScanIp, addrStart: e.target.value })}
 						></TextField>
 						<span className="px-4">{`~`}</span>
 						<TextField
 							size="small"
-							label="结束地址"
+							label="结束地址(不包含)"
 							className="w-12rem"
 							onChange={(e) => setCurScanIp({ ...curScanIp, addrEnd: e.target.value })}
 						></TextField>
@@ -67,16 +73,16 @@ const PortScanner = () => {
 						<span className="px-4 py-2 inline-flex h-3rem items-center">{`或`}</span>
 						<TextField
 							size="small"
-							label="开始端口"
+							label="开始端口(包含)"
 							className="w-12rem"
-							onChange={(e) => setCurScanPort({ ...curScanPort, portStart: e.target.value })}
+							onChange={(e) => setCurScanPort({ ...curScanPort, portStart: parseInt(e.target.value) })}
 						></TextField>
 						<span className="px-4">{`~`}</span>
 						<TextField
 							size="small"
-							label="结束端口"
+							label="结束端口(不包含)"
 							className="w-12rem"
-							onChange={(e) => setCurScanPort({ ...curScanPort, portEnd: e.target.value })}
+							onChange={(e) => setCurScanPort({ ...curScanPort, portEnd: parseInt(e.target.value) })}
 						></TextField>
 					</div>
 				</div>

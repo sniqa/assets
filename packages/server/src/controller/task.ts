@@ -45,19 +45,34 @@ export const portScanner = async (data: PortScanner) => {
 		return falseRes(ErrorType.MISSING_PARAMS)
 	}
 
-	const { ipAddrs, ports } = data
+	const {
+		ipAddrs: { addrs = '', addrStart = '', addrEnd = '' },
+		ports: { portEnd = 0, portStart = 0, ports = '' },
+	} = data
 
-	if (ipAddrs.addrs) {
-		if (ports.ports) {
-			const portArr = ports.ports.split(',').map((portStr) => parseInt(portStr))
-			const hostArr = ipAddrs.addrs.split(',')
-			console.log(portArr)
+	const portArr = ports
+		? ports.split(',').map((port) => parseInt(port))
+		: getPortsFromPortStartToPortEnd(portStart, portEnd)
+	const hostArr = addrs ? addrs.split(',') : getPortsFromIpStartToIpEnd(addrStart, addrEnd)
 
-			const res = await Promise.all(hostArr.map((host) => nodePortScanner(host, portArr)))
+	const result = await nodePortScanner(hostArr, portArr)
 
-			console.log(res)
+	console.log('result', result)
 
-			return trueRes(res)
-		}
-	}
+	return trueRes(result)
+}
+
+// 从开始地址与结束地址返回地址数组
+const getPortsFromIpStartToIpEnd = (start: string, end: string) => {
+	const ipStartBinary = ip.toLong(start)
+	const ipEndBinary = ip.toLong(end)
+	const ipLen = ipEndBinary - ipStartBinary
+
+	return Array.from({ length: ipLen }, (_, i) => ip.fromLong(ipStartBinary + i))
+}
+// 获取开始端口到结束端口的端口数组
+const getPortsFromPortStartToPortEnd = (start: number, end: number) => {
+	const length = end - start
+
+	return Array.from({ length }, (_, i) => start + i)
 }

@@ -10,8 +10,8 @@ export interface ScanIpAddrs {
 }
 
 export interface ScanPorts {
-	portStart?: string
-	portEnd?: string
+	portStart?: number
+	portEnd?: number
 	ports?: string
 }
 
