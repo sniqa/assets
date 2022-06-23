@@ -95,7 +95,7 @@ const TableToolbar = ({
 					<Tooltip title={DELETE_SELECTION_ROWS_TOOLTIP}>
 						<div className={disabledStatus.cursor}>
 							<IconButton onClick={() => deleteSelectRows()} disabled={isSelectionEmpty}>
-								{isSelectionEmpty ? <DeleteOutlineIcon color="action" /> : <DeleteIcon />}
+								{isSelectionEmpty ? <DeleteOutlineIcon color="action" /> : <DeleteIcon color="error" />}
 							</IconButton>
 						</div>
 					</Tooltip>

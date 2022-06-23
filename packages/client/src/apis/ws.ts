@@ -2,7 +2,7 @@ import { notice } from './mitt'
 import { nanoid } from 'nanoid'
 import mitt from 'mitt'
 
-const emitter = mitt()
+export const wsmitter = mitt()
 
 const serverInfo = {
 	hostname: 'localhost',
@@ -34,18 +34,28 @@ ws.onclose = () => console.log(`ws connection was closed`)
 
 ws.onerror = () => console.log(`ws connection was error`)
 
+ws.onmessage = (e) => {
+	const data = JSON.parse(e.data)
+
+	Object.keys(data).map((flag) => wsmitter.emit(flag, data[flag]))
+}
+
+// export const send = (data: Record<string, any>) => {
+// 	const id = nanoid()
+
+// 	ws.send(JSON.stringify({ id, data }))
+
+// 	return new Promise((resolve) => {
+// 		ws.onmessage = (e) => {
+// 			const { id: resId, data } = JSON.parse(e.data)
+
+// 			resId === id && resolve(data)
+// 		}
+// 	})
+// }
+
 export const send = (data: Record<string, any>) => {
-	const id = nanoid()
-
-	ws.send(JSON.stringify({ id, data }))
-
-	return new Promise((resolve) => {
-		ws.onmessage = (e) => {
-			const { id: resId, data } = JSON.parse(e.data)
-
-			resId === id && resolve(data)
-		}
-	})
+	ws.send(JSON.stringify(data))
 }
 
 export {}

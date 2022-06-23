@@ -4,6 +4,7 @@ import ping from 'ping'
 import ip from 'ip'
 import { IpScanner, PortScanner } from '@assets/types'
 import { nodePortScanner } from '../common/node-port-scanner'
+import { nanoid } from 'nanoid'
 
 export const ipScanner = async (data: IpScanner) => {
 	if (!hasKeys(data, 'ipStart')) {
@@ -30,14 +31,11 @@ export const ipScanner = async (data: IpScanner) => {
 }
 
 const getCountForIpRange = (start: string, end: string) => {
-	const count = ip.toLong(end) - ip.toLong(start)
+	const ipStartBinary = ip.toLong(start) + 1
 
-	let ipRange: string[] = []
-	for (let i = 0; i < count; i++) {
-		ipRange.push(ip.fromLong(ip.toLong(start) + i))
-	}
+	const count = ip.toLong(end) - ipStartBinary
 
-	return ipRange
+	return Array.from({ length: count }, (_, i) => ip.fromLong(ipStartBinary + i))
 }
 
 export const portScanner = async (data: PortScanner) => {
@@ -55,11 +53,11 @@ export const portScanner = async (data: PortScanner) => {
 		: getPortsFromPortStartToPortEnd(portStart, portEnd)
 	const hostArr = addrs ? addrs.split(',') : getPortsFromIpStartToIpEnd(addrStart, addrEnd)
 
-	const result = await nodePortScanner(hostArr, portArr)
+	// const result = await nodePortScanner(hostArr, portArr)
 
-	console.log('result', result)
+	const id = nanoid()
 
-	return trueRes(result)
+	return trueRes({ id })
 }
 
 // 从开始地址与结束地址返回地址数组
